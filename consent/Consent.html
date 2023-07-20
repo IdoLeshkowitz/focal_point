@@ -1,0 +1,17 @@
+{{ block scripts }}
+{{ endblock}}
+
+{{ block title }}
+    <h2 class="page-header"><b>Welcome</b></h2>
+{{ endblock }}
+
+{{ block content }}
+<section>
+    [[consent]]
+   {{ formfields }}
+</section>
+<div style="text-align: center">
+    {{ next_button }}
+</div>
+
+{{ endblock }}

@@ -1,0 +1,26 @@
+.incorrect-msg {
+    color: red;
+    text-align: center;
+}
+
+.correct-msg {
+    color: green;
+    text-align: center;
+}
+
+.hidden{
+    display: none;
+}
+
+.custom-select {
+  /* Define desired styles for the select element */
+  /* For example: */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  align-self: start;
+    min-width: 7rem;
+}
