@@ -35,6 +35,12 @@ class Exit(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
+    @staticmethod
+    def js_vars(player: Player):
+        return {
+            "userAcceptedTerms": player.participant.user_accepted_terms,
+            "endedSuccessfully": player.participant.ended_successfully,
+        }
 
 
 page_sequence = [PreProcess, Exit]

@@ -26,7 +26,10 @@ class Player(BasePlayer):
 
 # PAGES
 class PassVars(Page):
-    pass
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.role = "hider"
+        player.participant.ended_successfully = False
 
 
 page_sequence = [PassVars]

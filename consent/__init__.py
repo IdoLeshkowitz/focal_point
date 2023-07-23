@@ -41,7 +41,7 @@ class Consent(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
-        player.participant.consent = player.user_accepted_terms
+        player.participant.user_accepted_terms = player.user_accepted_terms
 
 
 class PreProcess(Page):

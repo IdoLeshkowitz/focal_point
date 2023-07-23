@@ -7,14 +7,21 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 SESSION_CONFIGS = [
     {
-        'name':                  'hider',
+        'name':                  "hider",
         'display_name':          "hider",
         'num_demo_participants': 1,
-        'app_sequence':          ['hider', 'consent', 'exit'],
+        'app_sequence':          ["hider", "consent", "instructions", "test", "hider_board", "exit"],
+    },
+    {
+        'name':                  "seeker",
+        'display_name':          "seeker",
+        'num_demo_participants': 1,
+        'app_sequence':          ["seeker", "consent", "instructions", "test", "exit"],
     }
 ]
 ROOMS = [
     {"name": "hider", "display_name": "hider"},
+    {"name": "seeker", "display_name": "seeker"}
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -24,7 +31,9 @@ ROOMS = [
 
 
 PARTICIPANT_FIELDS = [
-    "consent",
+    "user_accepted_terms",
+    "ended_successfully",
+    "role",
 ]
 SESSION_FIELDS = []
 

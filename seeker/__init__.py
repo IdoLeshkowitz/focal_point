@@ -8,7 +8,9 @@ There are 10 different apps like this, each with a matching variable.
 
 
 class C(BaseConstants):
-    pass
+    NAME_IN_URL = 'PassVarsOpener'
+    PLAYERS_PER_GROUP = None
+    NUM_ROUNDS = 1
 
 
 class Subsession(BaseSubsession):
@@ -25,7 +27,10 @@ class Player(BasePlayer):
 
 # PAGES
 class PassVars(Page):
-    pass
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        player.participant.role = "seeker"
+        player.participant.ended_successfully = False
 
 
 page_sequence = [PassVars]
