@@ -10,8 +10,12 @@
     [[consent]]
    {{ formfields }}
 </section>
-<div style="text-align: center">
-    {{ next_button }}
+<div style="hetext-align: center">
+    <button class="btn btn-primary" type="submit">Proceed</button>
 </div>
 
+{{ endblock }}
+
+{{ block styles}}
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
 {{ endblock }}

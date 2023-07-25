@@ -39,4 +39,4 @@ class PreProcess(Page):
         player.start_time = str(datetime.now(timezone.utc))
 
 
-page_sequence = [Instructions]
+page_sequence = [PreProcess,Instructions]

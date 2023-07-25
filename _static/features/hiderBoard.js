@@ -262,6 +262,7 @@ function renderHiderBoardPage() {
             }
             return (
                 <section>
+                    <h4>Instructions</h4>
                     {content}
                     <div class="button-container">
                         <button class="btn btn-primary" onClick={onButtonClick}>Proceed</button>

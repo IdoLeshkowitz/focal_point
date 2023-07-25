@@ -22,10 +22,10 @@ function renderTestPage() {
                 id="question_3"
                 expectedHiderAnswer="16"
                 expectedOpenerAnswer="4"
-                />,                                
+                />,    
+            <EndTest/>                            
         ]
         function reducer(state, action){
-            console.log("reducer", state, action)
             if (action.type === "submitQuestion"){
                 const currentStep = steps[state.currentStepIndex]
                 const expectedHiderAnswer = currentStep.props.expectedHiderAnswer
@@ -34,7 +34,8 @@ function renderTestPage() {
                 const openerAnswer = state.openerAnswer.value
                 const hiderAnswerIsCorrect = hiderAnswer === expectedHiderAnswer
                 const openerAnswerIsCorrect = openerAnswer === expectedOpenerAnswer
-                const isLastStep = state.currentStepIndex === steps.length - 1
+                const nextStep = steps[state.currentStepIndex + 1]
+                const isLastStep = nextStep.type.name === "EndTest" 
                 liveSend({
                     action: "submit_question",
                     question_id: currentStep.props.id,
@@ -48,10 +49,10 @@ function renderTestPage() {
                     if (state.mistakesCount === 0){
                         return {...state, mistakesCount: 1}
                     }
-                    return {...state, mistakesCount: 2, endedSuccessfully: false}
+                    return {...state, endedSuccessfully: false, currentStepIndex : steps.length - 1}
                 }
                 if (isLastStep){
-                    return {...state, endedSuccessfully: true}
+                    return {...state, endedSuccessfully: true, currentStepIndex : steps.length - 1}
                 }
                 return {...state, mistakesCount: 0, currentStepIndex: state.currentStepIndex + 1, hiderAnswer: {value: "", state: 'unanswered'}, openerAnswer: {value: "", state: 'unanswered'}} 
             }
@@ -63,7 +64,7 @@ function renderTestPage() {
             }
             if (action.type === "proceed"){
                 return {...state, currentStepIndex: state.currentStepIndex + 1}
-            }1
+            }
             if (action.type === "setHiderAnswer"){
                 return {...state, hiderAnswer: action.hiderAnswer}
             }
@@ -120,12 +121,6 @@ function renderTestPage() {
                         <section>
                             <h4>Test</h4>
                             {currentStep}
-                            {
-                                state.endedSuccessfully === true &&
-                                <p>
-                                    You have completed the test successfully. Please proceed to the next page.
-                                </p>
-                            }
                             <div class="button-container">       
                                 <button class="btn btn-primary" type="button" onClick={onButtonClick} disabled={!isInputValid()}>
                                     { state.endedSuccessfully === false ?
@@ -198,18 +193,31 @@ function renderTestPage() {
                         {props.label}<br/>
                         The Hider<input type="number" value={state.hiderAnswer.value} onChange={(e)=>onHiderAnswerChange(e.target.value)} className={inputClassName(state.hiderAnswer.state)}/> The Opener<input type="number" value={state.openerAnswer.value} onChange={(e)=>onOpenerAnswerChange(e.target.value)} className={inputClassName(state.openerAnswer.state)}/>
                     </p>
-                    { state.mistakesCount > 0 && 
+                    { state.mistakesCount === 1 && 
                         <p className="error">
-                            { state.mistakesCount === 1 && 
-                                <span>Incorrect answer. You have 1 more attempt.</span>
-                            }
-                            { state.mistakesCount === 2 &&
-                                <span>Incorrect answer. Please Exit the study.</span>
-                            }
+                            <span>Incorrect answer. You have 1 more attempt.</span>
                         </p>
                     }
                 </>
             )
+        }
+        function EndTest(props){
+            const state = React.useContext(StateContext)
+            if (state.endedSuccessfully === true){
+                return (
+                    <p>
+                        You have completed the test successfully. Please proceed to the next page.
+                    </p>
+                )
+            }
+            if (state.endedSuccessfully === false){
+                return (
+                    <p>
+                        Since you exceeded the amount of accepted attempts you are asked to exit the experiment.
+                    </p>
+                )
+            }
+                
         }
     `
     renderReactComponent(jsxCode, "react-root", "TestPage", JSON.stringify(js_vars));
