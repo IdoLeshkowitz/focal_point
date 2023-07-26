@@ -13,11 +13,10 @@ function renderHiderBoardPage() {
             if (action.type === "setInstructionsNumber"){
                 return {...state, currentInstructionsNumber: action.currentInstructionsNumber}
             }
-            if (action.type === "setDistributionByRound"){
-                const roundNumber = action.roundNumber
-                const distribution = action.distribution
-                const newDistributionByRound = {...state.distributionByRound, [roundNumber]: distribution}
-                return {...state, distributionByRound: newDistributionByRound}
+            if (action.type === "setSelectionByRound"){
+                const newSelectionByRound = {...state.selectionByRound}
+                newSelectionByRound[action.roundNumber] = action.selection
+                return {...state, selectionByRound: newSelectionByRound}
             }
             if (action.type === "setModal"){
                 return {...state, modal: action.modal}
@@ -48,10 +47,10 @@ function renderHiderBoardPage() {
                 2: 40,
                 3: 25,
             },
-            distributionByRound : {
-                1 : [0,0,0,0],
-                2 : [0,0,0,0],
-                3 : [0,0,0,0],
+            selectionByRound : {
+                1: [false,false,false,false],
+                2: [false,false,false,false],
+                3: [false,false,false,false],
             },
             steps : ["instructions","rounds"],
             modal : null,
@@ -89,9 +88,6 @@ function renderHiderBoardPage() {
             )
         }
         function Rounds(props){
-            const [progress, setProgress] = React.useState("distribution")// distribution, results
-            const [selectedBoxIndex, setSelectedBoxIndex] = React.useState(null)
-            const [temporaryNumber, setTemporaryNumber] = React.useState(null)
             const state = React.useContext(StateContext)
             const dispatch = React.useContext(DispatchContext)
             const currentRoundNumber = React.useMemo(()=>{
@@ -101,35 +97,9 @@ function renderHiderBoardPage() {
                 }
                 return state.currentRoundNumber
             }, [state.currentRoundNumber])
-            const currentDistribution = React.useMemo(()=>state.distributionByRound[currentRoundNumber], [state.distributionByRound, currentRoundNumber])
-            const numberOfObjectsInStorage = React.useMemo(()=> {
-                const numberOfObjects = state.numberOfObjectsByRound[currentRoundNumber]
-                const numberOfHiddenObjects = currentDistribution.reduce((a,b)=>a+b,0)
-                return numberOfObjects - numberOfHiddenObjects
-            }, [state.numberOfObjectsByRound, currentRoundNumber, currentDistribution])
-            function onDistributionChange(numberOfObjects, boxIndex){
-                const newDistribution = [...currentDistribution]
-                newDistribution[boxIndex] = parseInt(numberOfObjects)
-                const numberOfHiddenObjects = newDistribution.reduce((a,b)=>a+b,0)
-                if (numberOfHiddenObjects > state.numberOfObjectsByRound[currentRoundNumber]){
-                    dispatch({type:"setModal", modal: "tooManyObjects"})
-                    return
-                }
-                dispatch({type:"setDistributionByRound", roundNumber: currentRoundNumber, distribution: newDistribution})
-            }
-            function onBoxBlur(boxIndex){
-                if (isNaN(parseInt(temporaryNumber)) || parseInt(temporaryNumber) < 0){
-                    setTemporaryNumber(null)
-                }
-                else {
-                    onDistributionChange(temporaryNumber, boxIndex)
-                }
-                setSelectedBoxIndex(null)   
-                setTemporaryNumber(null)
-            }
-            function onBoxChange(newValue){
-                setTemporaryNumber(newValue)
-            }
+            const currentSelection = React.useMemo(()=>{
+                return state.selectionByRound[currentRoundNumber]
+            }, [state.selectionByRound, currentRoundNumber])
             function onReset(){
                 dispatch({type:"setDistributionByRound", roundNumber: currentRoundNumber, distribution: [0,0,0,0]})
                 setProgress("distribution")
@@ -140,48 +110,16 @@ function renderHiderBoardPage() {
                     dispatch({type:"finishRounds"})
                 }
                 dispatch({type:"setRoundNumber", currentRoundNumber: nextRoundNumber})
-                setProgress("distribution")
             }
-            if (progress === "results"){
-                function calculateValue(numberOfObjects, multiplier){
-                    return numberOfObjects * multiplier
-                }
-                return (
-                    <section>
-                        <h4>Round {currentRoundNumber}</h4>
-                        <div className="hider-board">
-                            {/* storage */}
-                            <div className="storage">
-                                0
-                            </div>
-                            {/* boxes */}
-                            <div class="boxes">
-                                {
-                                    currentDistribution.map((numberOfObjects, boxIndex)=>{
-                                        const value = calculateValue(numberOfObjects, state.multipliersByRound[currentRoundNumber][boxIndex])
-                                        return (
-                                            <div className="box-container">
-                                                <span className="box">{value}</span>
-                                                <span>×{state.multipliersByRound[currentRoundNumber][boxIndex]}</span>
-                                            </div>
-                                        )
-                                    })               
-                                }
-                            </div>
-                            <div class="footer">
-                                <p>
-                                    Above you can see the value of each box. The value is calculated by multiplying the number of objects in the box by the box’s multiplication rate.<br/>
-                                    You can now proceed to the next round, or click back and hide again.
-                                </p>
-                                <div className="buttons">
-                                    <button class="btn btn-primary" type="button" onClick={()=>onReset()}>Back</button>
-                                    <button class="btn btn-primary" type="button" onClick={()=>finishRound()}>Proceed</button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                )               
+            function onBoxClick(boxIndex){
+                const isSelected = currentSelection[boxIndex]
+                const newSelection = [...currentSelection]
+                newSelection[boxIndex] = !isSelected
+                dispatch({type:"setSelectionByRound", roundNumber: currentRoundNumber, selection: newSelection})
             }
+            const numberOfObjectsInStorage = React.useMemo(()=>{
+                return state.numberOfObjectsByRound[currentRoundNumber]
+            }, [state.numberOfObjectsByRound, currentRoundNumber])
             const storageClassName = () =>{
                 let className = "storage"
                 if (numberOfObjectsInStorage === 0){
@@ -189,6 +127,18 @@ function renderHiderBoardPage() {
                 }
                 return className
             }
+            const boxesClassName = (boxIndex) =>{
+                let className = "box question-mark seeker"
+                const isSelected = currentSelection[boxIndex] === true
+                if (isSelected){
+                    className += " selected"
+                }
+                return className
+            }
+            const isReadyToProceed = React.useMemo(()=>{
+                const numberOfSelectedBoxes = currentSelection.filter((isSelected)=>isSelected).length
+                return numberOfSelectedBoxes === 2
+            }, [currentSelection])
             return (
                 <section>
                     <h4>Round {currentRoundNumber}</h4>
@@ -200,19 +150,13 @@ function renderHiderBoardPage() {
                         {/* boxes */}
                         <div class="boxes">
                             {
-                                currentDistribution.map((numberOfObjects, boxIndex)=>{
+                                currentSelection.map((numberOfObjects, boxIndex)=>{
                                     return (
                                         <div className="box-container">
                                             <input 
-                                                type="number" 
-                                                className="box hider" 
-                                                value={selectedBoxIndex === boxIndex ? temporaryNumber : numberOfObjects}
-                                                onFocus={()=>{
-                                                    if (progress !== "distribution") return
-                                                    setSelectedBoxIndex(boxIndex)
-                                                }}
-                                                onBlur={()=>onBoxBlur(boxIndex)} 
-                                                onChange={(e)=>onBoxChange(e.target.value)}
+                                                type="checkbox" 
+                                                className={boxesClassName(boxIndex)} 
+                                                onClick={()=>{onBoxClick(boxIndex)}}
                                                 />
                                              <span>
                                                 ×{state.multipliersByRound[currentRoundNumber][boxIndex]}
@@ -224,9 +168,9 @@ function renderHiderBoardPage() {
                         </div>
                         <div class="footer">
                         {
-                            numberOfObjectsInStorage === 0 &&
+                            isReadyToProceed &&
                                 <div className="buttons">
-                                    <button class="btn btn-primary" type="button" onClick={()=>setProgress("results")}>Done</button>
+                                    <button class="btn btn-primary" type="button" onClick={finishRound}>Done</button>
                                 </div>
                         }
                         </div>

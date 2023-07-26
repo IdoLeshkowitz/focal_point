@@ -16,7 +16,7 @@ SESSION_CONFIGS = [
         'name':                  "seeker",
         'display_name':          "seeker",
         'num_demo_participants': 1,
-        'app_sequence':          ["seeker", "consent", "instructions", "test", "exit"],
+        'app_sequence':          ["seeker", "consent", "instructions", "test", "seeker_board", "exit"],
     }
 ]
 ROOMS = [

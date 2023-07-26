@@ -27,7 +27,12 @@
     border: 1px solid green;
 }
 
-.box:focus {
+.hider:focus {
+    transform: scale(1.1);
+    transition: 0.2s ease-in transform;
+    outline: none;
+}
+.seeker:hover{
     transform: scale(1.1);
     transition: 0.2s ease-in transform;
     outline: none;
@@ -39,7 +44,7 @@
     text-align: center;
     width: 100%;
     font-size: 1.2rem;
-    /*font-size: 1.7rem;*/
+    appearance: none;
 }
 
 .boxes{
@@ -68,4 +73,20 @@
     justify-content: space-evenly;
     align-items: center;
     gap: 1rem;
+}
+
+.question-mark::before {
+    content: "?";
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ccc;
+}
+
+.selected{
+    border: 1px solid green;
+    border-top: none;
+}
+
+.selected.question-mark::before{
+    color: green;
 }
