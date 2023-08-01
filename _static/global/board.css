@@ -75,11 +75,8 @@
     gap: 1rem;
 }
 
-.question-mark::before {
-    content: "?";
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ccc;
+.question-mark {
+    min-height: 2rem;
 }
 
 .selected{

@@ -54,7 +54,7 @@ class Subsession(BaseSubsession):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'instructions'
+    NAME_IN_URL = 'test'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 

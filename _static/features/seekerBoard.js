@@ -33,7 +33,7 @@ function renderHiderBoardPage() {
             return state
         }
         const initialState = {
-            currentStep: "instructions",
+            currentStep: "rounds",
             currentRoundNumber: null,
             currentInstructionsNumber: null,
             numberOfRounds: 3,
@@ -52,7 +52,7 @@ function renderHiderBoardPage() {
                 2: [false,false,false,false],
                 3: [false,false,false,false],
             },
-            steps : ["instructions","rounds"],
+            steps : ["intro","rounds"],
             modal : null,
         }
         const DispatchContext = React.createContext(null)
@@ -64,7 +64,7 @@ function renderHiderBoardPage() {
                 <DispatchContext.Provider value={dispatch}>
                     <StateContext.Provider value={state}>
                         <section>
-                            {currentStep === "instructions" && <Instructions/>}
+                            {currentStep === "intro" && <Instructions/>}
                             {currentStep === "rounds" && <Rounds/>}
                             {currentStep === "feedback" && <Feedback/>}
                         </section>
@@ -148,19 +148,20 @@ function renderHiderBoardPage() {
                             {numberOfObjectsInStorage}
                         </div>
                         {/* boxes */}
-                        <div class="boxes">
+                        <div className="boxes">
                             {
                                 currentSelection.map((numberOfObjects, boxIndex)=>{
                                     return (
                                         <div className="box-container">
-                                            <input 
-                                                type="checkbox" 
-                                                className={boxesClassName(boxIndex)} 
-                                                onClick={()=>{onBoxClick(boxIndex)}}
-                                                />
-                                             <span>
+                                            <div className={boxesClassName(boxIndex)}/>
+                                            <b>
                                                 ×{state.multipliersByRound[currentRoundNumber][boxIndex]}
-                                            </span>
+                                            </b>
+                                            <input 
+                                                type="checkbox"
+                                                checked={currentSelection[boxIndex]}
+                                                onChange={()=>{onBoxClick(boxIndex)}}
+                                                />
                                         </div>
                                     )
                                 })

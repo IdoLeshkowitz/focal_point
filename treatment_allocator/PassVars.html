@@ -1,0 +1,14 @@
+{{ block content }}
+<body onload="skip_page()">
+<input name="browser" type="hidden">
+treatment allocator
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    function skip_page() {
+        document.getElementById("form").submit();
+    }
+</script>
+{{ endblock }}
+

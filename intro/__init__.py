@@ -7,7 +7,7 @@ class Player(BasePlayer):
     end_time = models.StringField(blank=True, initial="")
 
 
-class Instructions(Page):
+class Intro(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
@@ -28,7 +28,7 @@ class Subsession(BaseSubsession):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'test'
+    NAME_IN_URL = 'intro'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
@@ -39,4 +39,4 @@ class PreProcess(Page):
         player.start_time = str(datetime.now(timezone.utc))
 
 
-page_sequence = [PreProcess,Instructions]
+page_sequence = [PreProcess,Intro]

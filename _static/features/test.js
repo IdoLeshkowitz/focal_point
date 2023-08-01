@@ -6,19 +6,19 @@ function renderTestPage() {
         const steps = [
             <Instructions/>,
             <Question 
-                label={<span>If the Hider puts all objects in B2 and the Opener opens box B4 how much will they get –</span>}
+                label={<span>If the Hider hides all six objects in box B2 and the Opener opens box B4 how much will they each get?</span>}
                 id="question_1"
                 expectedHiderAnswer="12"
                 expectedOpenerAnswer="0"
                 />,
             <Question
-                label={<span>If the Hider puts 2 objects in B2 and 4 objects in B4 and the Opener opens box B4 how much will they get –</span>}
+                label={<span>If the Hider hides 2 objects in box B2 and 4 objects in box B4 and the Opener opens box B4 how much will they each get?</span>}
                 id="question_2"
                 expectedHiderAnswer="4"
                 expectedOpenerAnswer="16"
                 />,
             <Question
-                label={<span>If the Hider puts, again, 2 objects in B2 and 4 objects in B4 and the Opener opens box B2 how much will they get –</span>}
+                label={<span>If the Hider hides, again, 2 objects in box B2 and 4 objects in box B4 and the Opener opens box B2 how much will they each get?</span>}
                 id="question_3"
                 expectedHiderAnswer="16"
                 expectedOpenerAnswer="4"
@@ -137,11 +137,16 @@ function renderTestPage() {
         }
         function Instructions(){
             return ( 
-                <p>
-                    Before you do let us make sure that you understand the game.<br/>
-                    Consider two boxes; box B2 multiplies its objects by 2; box B4 multiplies its objects by 4.<br/>
-                    The hider has 6 objects to hide.
-                </p>
+                <>
+                    <p>
+                        In the test, there are two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
+                    </p>
+                    <p>
+                        Before you do let’s make sure that you understand the game.<br/>
+                        Here comes a simple test of three questions; you are allowed only one error per question. If
+                        you fail the test your participation will be terminated.
+                    </p>
+                </>
             )
         }
         function Question(props){
@@ -195,7 +200,7 @@ function renderTestPage() {
                     </p>
                     { state.mistakesCount === 1 && 
                         <p className="error">
-                            <span>Incorrect answer. You have 1 more attempt.</span>
+                            <span>Incorrect answer. You have 1 attempt remaining.</span>
                         </p>
                     }
                 </>

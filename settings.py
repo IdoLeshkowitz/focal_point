@@ -10,18 +10,25 @@ SESSION_CONFIGS = [
         'name':                  "hider",
         'display_name':          "hider",
         'num_demo_participants': 1,
-        'app_sequence':          ["hider", "consent", "instructions", "test", "hider_board", "exit"],
+        'app_sequence':          ["hider", "consent", "intro", "test", "board_intro", "hider_board", "exit"],
     },
     {
         'name':                  "seeker",
         'display_name':          "seeker",
         'num_demo_participants': 1,
-        'app_sequence':          ["seeker", "consent", "instructions", "test", "seeker_board", "exit"],
+        'app_sequence':          ["seeker", "consent", "intro", "test", "board_intro", "seeker_board", "exit"],
+    },
+    {
+        'name':                  "treatment_allocator",
+        'display_name':          "treatment_allocator",
+        'num_demo_participants': 1,
+        'app_sequence':          ["treatment_allocator"],
     }
 ]
 ROOMS = [
     {"name": "hider", "display_name": "hider"},
-    {"name": "seeker", "display_name": "seeker"}
+    {"name": "seeker", "display_name": "seeker"},
+    {"name": "treatment_allocator", "display_name": "treatment_allocator"},
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

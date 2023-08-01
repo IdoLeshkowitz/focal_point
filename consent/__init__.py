@@ -23,8 +23,8 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     start_time = models.StringField(initial=datetime.now(timezone.utc))
     end_time = models.StringField(blank=True, initial="")
-    user_accepted_terms = models.BooleanField(label="Confirmation:", choices=[[True, "Yes, I agree to participate in the study"],
-        [False, "No, I do not agree to participate in the study"]])
+    user_accepted_terms = models.BooleanField(label="Do you agree to participate?", choices=[[True, "Yes"],
+        [False, "No"]])
     prolific_id = models.StringField(label="Please enter your Prolific ID:", initial="")
 
 

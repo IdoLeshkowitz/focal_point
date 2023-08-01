@@ -34,7 +34,7 @@ function renderHiderBoardPage() {
             return state
         }
         const initialState = {
-            currentStep: "instructions",
+            currentStep: "intro",
             currentRoundNumber: null,
             currentInstructionsNumber: null,
             numberOfRounds: 3,
@@ -53,7 +53,7 @@ function renderHiderBoardPage() {
                 2 : [0,0,0,0],
                 3 : [0,0,0,0],
             },
-            steps : ["instructions","rounds"],
+            steps : ["intro","rounds"],
             modal : null,
         }
         const DispatchContext = React.createContext(null)
@@ -65,7 +65,7 @@ function renderHiderBoardPage() {
                 <DispatchContext.Provider value={dispatch}>
                     <StateContext.Provider value={state}>
                         <section>
-                            {currentStep === "instructions" && <Instructions/>}
+                            {currentStep === "intro" && <Instructions/>}
                             {currentStep === "rounds" && <Rounds/>}
                             {currentStep === "feedback" && <Feedback/>}
                         </section>

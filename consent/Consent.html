@@ -2,18 +2,55 @@
 {{ endblock}}
 
 {{ block title }}
-    <h2 class="page-header"><b>Welcome</b></h2>
 {{ endblock }}
 
 {{ block content }}
 <section>
-    [[consent]]
+    <p>
+        Welcome to the “Hiding” game experiment! Before we start, please respond to the informed consent form.
+    </p>
+    <p>
+        <b>Informed consent form</b><br/>
+        Principal Investigator: Yaakov Kareev<br/>
+        We are asking you to participate in a research study. This form will give you some information about the study. Please read this form carefully.
+    </p>
+    <p>
+        A. Project Description<br/>
+        The game involves a set of boxes and a number of objects to be hidden in the boxes.
+        Each box has a value by which the number of objects in the box is multiplied (the box’ <b>multiplication rate</b>).<br/>
+        You will play either as a “Hider” or as an “Opener”. If you are a Hider you will distribute the
+        objects endowed to you across the boxes; if you are an Opener you will choose half of the boxes to be opened later.<br/>
+        The Opener earns the value of the objects in the opened boxes, the Hider earns the value of the objects in the remaining boxes.<br/>
+        After playing, you will be asked to answer few questions.
+    </p>
+    <p>
+        This study is part of a research being conducted with the goal of publication in academic journals and presentation at academic conferences.
+    </p>
+    <p>
+        B. Risks and Benefits<br/>
+        <ol>
+            <li>Your participation in this study does not involve any physical or emotional risk to you beyond the risks of daily life.</li>
+            <li>You have the right to discontinue participation at any time for any reason; but if you do, you will forfeit your payoff.</li>
+            <li>The potential benefit of the study is a better scientific understanding of people’s decision making.</li>
+        </ol>
+    </p>
+    <p>
+        C. Confidentiality<br/>
+        We do not have access to your identity, nor do we have any need to know it. Hence, your privacy will be maintained in all published and written data resulting from this study. All data collected will be analyzed in an aggregate form.
+    </p>
+    <p>
+        D. Contacts<br/>
+        If you have any questions or concerns about this study or rights as a participant in this research, you may contact idoleshkowitz@gmail.com
+    </p>
+    <p>
+        E. Subject Rights<br/>
+        Participation in this study is voluntary.
+    </p>
    {{ formfields }}
 </section>
-<div style="hetext-align: center">
+<div class="btn-container">
     <button class="btn btn-primary" type="submit">Proceed</button>
 </div>
-
 {{ endblock }}
 
 {{ block styles}}
