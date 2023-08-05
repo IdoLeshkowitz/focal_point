@@ -47,12 +47,29 @@
     appearance: none;
 }
 
+.box-full{
+    border : none;
+    background-color: #ccc;
+    text-align: center;
+    width: 100%;
+    font-size: 1.2rem;
+    appearance: none;
+    color : #ed7d31;
+}
 .boxes{
     grid-area: boxes;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-left: 2rem;
+}
+
+.boxes-area{
+    grid-area: boxes;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    justify-content: center;
 }
 .box-container {
     display: flex;

@@ -25,13 +25,12 @@ class Player(BasePlayer):
     end_time = models.StringField(blank=True, initial="")
     user_accepted_terms = models.BooleanField(label="Do you agree to participate?", choices=[[True, "Yes"],
         [False, "No"]])
-    prolific_id = models.StringField(label="Please enter your Prolific ID:", initial="")
 
 
 # PAGES
 class Consent(Page):
     form_model = "player"
-    form_fields = ["user_accepted_terms", "prolific_id"]
+    form_fields = ["user_accepted_terms"]
 
     @staticmethod
     def app_after_this_page(player: Player, upcoming_apps):
