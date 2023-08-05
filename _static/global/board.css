@@ -11,6 +11,12 @@
     padding : 2% 3% ;
 }
 
+.storage-area{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: .5rem;
+}
 .storage {
     grid-area: storage;
     border: 1px solid #ccc;
@@ -21,8 +27,8 @@
     align-items: center;
     text-align: center;
     font-size: 1.7rem;
+    font-weight: bold;
 }
-
 .storage.green{
     border: 1px solid green;
 }

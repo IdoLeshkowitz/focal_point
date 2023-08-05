@@ -139,8 +139,13 @@ function renderHiderBoardPage() {
                     <h4>Round {props.roundNumber}</h4>
                     <div className="hider-board">
                         {/* storage */}
-                        <div className={storageClassName()}>
-                            {numberOfObjectsInStorage}
+                        <div className="storage-area">
+                            <div className={storageClassName()}>
+                                {numberOfObjectsInStorage}
+                            </div>
+                            <span style={{alignSelf:"center"}}>
+                            Objects left to hide
+                            </span>
                         </div>
                         {/* boxes */}
                         <div className="boxes-area">
@@ -187,7 +192,7 @@ function renderHiderBoardPage() {
                                         const value = numberOfObjects * state.multipliers[boxIndex]
                                         return (
                                             <div className="box-container">
-                                                <span className="box-full">{value}</span>
+                                                <span className="box-full" style={{userSelect:'none'}}>{value}</span>
                                             </div>
                                         )
                                     })
