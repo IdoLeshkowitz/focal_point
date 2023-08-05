@@ -54,7 +54,7 @@ function renderHiderBoardPage() {
             }, [state.numberOfObjectsByRound, currentDistribution])
             function onDistributionChange(numberOfObjects, boxIndex){
                 const newDistribution = [...currentDistribution]
-                newDistribution[boxIndex] = parseInt(numberOfObjects)
+                newDistribution[boxIndex] = numberOfObjects
                 const numberOfHiddenObjects = newDistribution.reduce((a,b)=>a+b,0)
                 if (numberOfHiddenObjects > state.totalNumberOfObjects){
                     return
@@ -66,7 +66,7 @@ function renderHiderBoardPage() {
                     setTemporaryNumber(null)
                 }
                 else {
-                    onDistributionChange(temporaryNumber, boxIndex)
+                    onDistributionChange(parseInt(temporaryNumber), boxIndex)
                 }
                 setSelectedBoxIndex(null)   
                 setTemporaryNumber(null)
@@ -78,6 +78,13 @@ function renderHiderBoardPage() {
                 dispatch({type:"setDistribution", distribution: [0,0,0,0]})
                 setProgress("distribution")
             }
+            function onDone(){
+                if (progress === "distribution"){
+                    setProgress("results")   
+                }else {
+                    finishRound()
+                }
+            }
             function finishRound(){
                 for (let i=0; i<state.distribution.length; i++){
                     liveSend({
@@ -87,45 +94,6 @@ function renderHiderBoardPage() {
                     })
                 }
                 document.querySelector("form").submit()
-            }
-            if (progress === "results"){
-                function calculateValue(numberOfObjects, multiplier){
-                    return numberOfObjects * multiplier
-                }
-                return (
-                    <section>
-                        <h4>Round {props.roundNumber}</h4>
-                        <div className="hider-board">
-                            {/* storage */}
-                            <div className="storage">
-                                0
-                            </div>
-                            {/* boxes */}
-                            <div className="boxes">
-                                {
-                                    currentDistribution.map((numberOfObjects, boxIndex)=>{
-                                        const value = calculateValue(numberOfObjects, state.multipliers[boxIndex])
-                                        return (
-                                            <div className="box-container">
-                                                <span className="box-full">{value}</span>                                                
-                                            </div>
-                                        )
-                                    })               
-                                }
-                            </div>
-                            <div className="footer">
-                                <p>
-                                    Above you can see the value of each box. The value is calculated by multiplying the number of objects in the box by the box’s multiplication rate.<br/>
-                                    You can now proceed to the next round, or click back and hide again.
-                                </p>
-                                <div className="buttons">
-                                    <button className="btn btn-primary" type="button" onClick={()=>onReset()}>Back</button>
-                                    <button className="btn btn-primary" type="button" onClick={()=>finishRound()}>Proceed</button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                )               
             }
             const storageClassName = () =>{
                 let className = "storage"
@@ -149,43 +117,45 @@ function renderHiderBoardPage() {
                         </div>
                         {/* boxes */}
                         <div className="boxes-area">
-                            <div className="boxes">
-                                {
-                                    currentDistribution.map((numberOfObjects, boxIndex)=>{
-                                        return (
-                                            <div className="box-container">
-                                                <input 
-                                                    type="number" 
-                                                    className="box hider" 
-                                                    value={selectedBoxIndex === boxIndex ? temporaryNumber : numberOfObjects}
-                                                    onFocus={()=>{
-                                                        if (progress !== "distribution") return
-                                                        setSelectedBoxIndex(boxIndex)
-                                                    }}
-                                                    onBlur={()=>onBoxBlur(boxIndex)} 
-                                                    onChange={(e)=>onBoxChange(e.target.value)}
-                                                    />
-                                                 <span>
-                                                    ×{state.multipliers[boxIndex]}
-                                                </span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <div className="boxes">
-                                { 
-                                    currentDistribution.map((_)=>{
-                                        return (
-                                            <div className="box-container">
-                                                <span style={{fontWeight:"bold", fontSize:"2.5rem", color:"#ed7d31"}}>
-                                                    ↓
-                                                </span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
+                            { progress === "distribution" &&
+                                <>
+                                    <div className="boxes">
+                                        {
+                                            currentDistribution.map((numberOfObjects, boxIndex)=>{
+                                                return (
+                                                    <div className="box-container">
+                                                        <input 
+                                                            type="number" 
+                                                            className="box hider" 
+                                                            value={selectedBoxIndex === boxIndex ? temporaryNumber : numberOfObjects.toString()}
+                                                            onFocus={()=>{
+                                                                if (progress !== "distribution") return
+                                                                setSelectedBoxIndex(boxIndex)
+                                                            }}
+                                                            onBlur={()=>onBoxBlur(boxIndex)} 
+                                                            onChange={(e)=>onBoxChange(e.target.value)}
+                                                            />
+                                                        <b>×{state.multipliers[boxIndex]}</b>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    <div className="boxes">
+                                        { 
+                                            currentDistribution.map((_)=>{
+                                                return (
+                                                    <div className="box-container">
+                                                        <span style={{fontWeight:"bold", fontSize:"2.5rem", color:"#ed7d31"}}>
+                                                            ↓
+                                                        </span>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </>
+                            }
                             <div className="boxes">
                                 {
                                     currentDistribution.map((numberOfObjects, boxIndex)=>{
@@ -201,9 +171,19 @@ function renderHiderBoardPage() {
                         </div>
                         <div className="footer">
                         {
+                            progress === "results" &&
+                                <p>
+                                    Above you can see the value of each box. The value is calculated by multiplying the number of objects in the box by the box’s multiplication rate.<br/>
+                                    You can now proceed to the next round, or click back and hide again.
+                                </p>
+                        }
+                        {
                             numberOfObjectsInStorage === 0 &&
                                 <div className="buttons">
-                                    <button className="btn btn-primary" type="button" onClick={()=>setProgress("results")}>Done</button>
+                                    { progress === "results" &&
+                                        <button className="btn btn-primary" type="button" onClick={onReset}>Back</button>
+                                    }
+                                    <button className="btn btn-primary" type="button" onClick={onDone}>Done</button>
                                 </div>
                         }
                         </div>
