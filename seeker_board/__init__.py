@@ -90,7 +90,7 @@ class PreProcess(Page):
         round_number = player.round_number
         multipliers = multipliers_sets_by_round[round_number]
         player.total_number_of_objects = total_number_of_objects_by_round[round_number]
-        random.shuffle(multipliers)
+        # random.shuffle(multipliers)
         player.box0_multiplier = multipliers[0]
         player.box1_multiplier = multipliers[1]
         player.box2_multiplier = multipliers[2]

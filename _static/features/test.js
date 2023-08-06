@@ -139,12 +139,12 @@ function renderTestPage() {
             return ( 
                 <>
                     <p>
-                        In the test, there are two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
-                    </p>
-                    <p>
                         Before you do let’s make sure that you understand the game.<br/>
                         Here comes a simple test of three questions; you are allowed only one error per question. If
                         you fail the test your participation will be terminated.
+                    </p>
+                    <p>
+                        In the test, there are two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
                     </p>
                 </>
             )
@@ -194,6 +194,9 @@ function renderTestPage() {
             }
             return (
                 <>
+                    <p>
+                        In the test, there are two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
+                    </p>
                     <p>
                         {props.label}<br/>
                         The Hider<input type="number" value={state.hiderAnswer.value} onChange={(e)=>onHiderAnswerChange(e.target.value)} className={inputClassName(state.hiderAnswer.state)}/> The Opener<input type="number" value={state.openerAnswer.value} onChange={(e)=>onOpenerAnswerChange(e.target.value)} className={inputClassName(state.openerAnswer.state)}/>

@@ -134,8 +134,15 @@ function renderHiderBoardPage() {
                                                             }}
                                                             onBlur={()=>onBoxBlur(boxIndex)} 
                                                             onChange={(e)=>onBoxChange(e.target.value)}
+                                                            onKeyDown={(e)=>{
+                                                                if (e.key === "Enter"){
+                                                                    onBoxBlur(boxIndex)
+                                                                    e.target.blur()
+                                                                }
+                                                            }}
                                                             />
-                                                        <b>×{state.multipliers[boxIndex]}</b>
+                                                        <b>
+                                                        ×{state.multipliers[boxIndex]}</b>
                                                     </div>
                                                 )
                                             })

@@ -7,14 +7,14 @@ function renderExitPage(){
            if (!props.userAcceptedTerms){
                 return (
                     <p>
-                    Thank you for your interest in this study. Unfortunately, you did not accept the terms and conditions of the study, hence you are asked to leave.
+                    Please return your hit.
                     </p>
                 )
             }
             if (props.endedSuccessfully){
                 return (
                     <p>
-                        Thank you for your participation in this study. You have successfully completed the study.
+                        You have successfully completed the study. Thank you for your participation.
                     </p>
                 )
             } else {

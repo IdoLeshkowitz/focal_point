@@ -85,7 +85,7 @@ class PreProcess(Page):
     def before_next_page(player: Player, timeout_happened):
         round_number = player.round_number
         multipliers = multipliers_by_round[round_number][:]
-        random.shuffle(multipliers)
+        # random.shuffle(multipliers)
         player.total_number_of_objects = total_number_of_objects_by_round[round_number]
         player.box0_multiplier = multipliers[0]
         player.box1_multiplier = multipliers[1]
