@@ -15,10 +15,12 @@ class Player(BasePlayer):
 class Test(Page):
     form_model = 'player'
     form_fields = ['ended_successfully']
+
     @staticmethod
     def js_vars(player: Player):
         return {
             "currentStepIndex": player.current_step_index,
+            "roundNumber":      player.round_number,
         }
 
     @staticmethod
@@ -33,10 +35,12 @@ class Test(Page):
                 player.question_2_attempts += str(data) + ","
             elif question_id == "question_3":
                 player.question_3_attempts += str(data) + ","
+
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
         print(player.ended_successfully)
+
     @staticmethod
     def app_after_this_page(player: Player, upcoming_apps):
         ended_successfully = player.ended_successfully
@@ -44,6 +48,7 @@ class Test(Page):
             return upcoming_apps[0]
         else:
             return upcoming_apps[-1]
+
 
 class Group(BaseGroup):
     pass

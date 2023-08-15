@@ -83,31 +83,82 @@ function renderHiderBoardPage() {
                 <section>
                     <h4>Round {props.roundNumber}</h4>
                     <div className="hider-board">
-                        {/* storage */}
-                        <div className={storageClassName()}>
-                            {state.totalNumberOfObjects}
+                        <div className="board-row background-dark-grey">
+                            <div className="info background-light-grey">
+                                <p>
+                                    Another player distributed {state.totalNumberOfObjects} objects into some or all the boxes.
+                                </p>
+                            </div>
+                            {/* storage */}
+                            <div className={storageClassName()}>
+                                <h4>
+                                    {state.totalNumberOfObjects}
+                                </h4>
+                                <span style={{alignSelf:"center"}}>
+                                    Objects left to hide
+                                </span>
+                            </div>
+                            <div className="boxes-area">
+                                <div className="boxes">
+                                    {
+                                        state.selection.map((_,boxIndex)=>{
+                                            return (
+                                                <div className="box-container">
+                                                    <div className="box box-open hider">
+                                                        <span className="text-black">?</span>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
                         </div>
-                        {/* boxes */}
-                        <div className="boxes">
+                        <div className="board-row background-dark-grey">
+                            <div className="info background-light-grey">
+                                The objects have multiplied in the boxes
+                            </div>
+                            <div className="boxes">
+                                {
+                                    state.selection.map((_, boxIndex)=>{
+                                        return (
+                                            <div className="box-container">
+                                                <span className="arrow-down">
+                                                    ×{state.multipliers[boxIndex]}
+                                                </span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+                        <div className="board-row background-yellow">
+                            <div className="info">
+                                <p>
+                                    <u>Your Task:</u><br/>
+                                    Choose 2 boxes to take.
+                                </p>
+                            </div>
+                            <div className="boxes">
                             {
-                                state.selection.map((_, boxIndex)=>{
+                                state.selection.map((isSelected, boxIndex)=>{
                                     return (
-                                        <div className="box-container">
-                                            <div className={boxesClassName(boxIndex)}/>
-                                            <b>
-                                                ×{state.multipliers[boxIndex]}
-                                            </b>
-                                            <input 
-                                                type="checkbox"
-                                                checked={state.selection[boxIndex]}
-                                                onChange={()=>{onBoxClick(boxIndex)}}
-                                                />
+                                        <div className="box-container" >
+                                            <div className="box-closed box" >
+                                                <span className="text-white">?</span>
+                                            </div>
+                                                <input
+                                                    type="checkbox" 
+                                                    value ={isSelected}
+                                                    onChange={()=>{onBoxClick(boxIndex)}}
+                                                    />
                                         </div>
                                     )
                                 })
                             }
+                            </div>
                         </div>
-                        <div class="footer">
+                        <div className="footer">
                         {
                             isReadyToProceed &&
                                 <div className="buttons">

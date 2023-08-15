@@ -57,11 +57,19 @@ h5 {
 }
 
 .error{
-
+    color : red;
 }
 
 .btn-container{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.text-black{
+    color:black !important;
+}
+
+.text-white{
+    color:white; !important;
 }

@@ -20,13 +20,15 @@ class Player(BasePlayer):
 
     total_number_of_objects = models.IntegerField(blank=True, initial=-1)
 
+    multipliers_sets_order = models.StringField(blank=True, initial="")
+
     feedback = models.LongStringField(blank=True, initial="")
 
 
-multipliers_sets_by_round = {
-    1: [1, 1, 1, 1],
-    2: [1, 1, 1, 3],
-    3: [1, 2, 3, 4],
+multipliers_sets = {
+    "a": [1, 1, 1, 1],
+    "b": [1, 1, 1, 3],
+    "c": [1, 2, 3, 4],
 }
 
 total_number_of_objects_by_round = {
@@ -41,7 +43,7 @@ class SeekerBoard(Page):
     def js_vars(player: Player):
         return {
             'totalNumberOfObjects': total_number_of_objects_by_round[player.round_number],
-            "multipliers":          multipliers_sets_by_round[player.round_number],
+            "multipliers":          [player.box0_multiplier, player.box1_multiplier, player.box2_multiplier, player.box3_multiplier],
             'roundNumber':          player.round_number
         }
 
@@ -88,9 +90,15 @@ class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         round_number = player.round_number
-        multipliers = multipliers_sets_by_round[round_number]
+        if player.round_number == 1:
+            # shuffle the multipliers order
+            order = ["a", "b", "c"]
+            random.shuffle(order)
+            player.multipliers_sets_order = str(order)
+        current_order = eval(player.in_round(1).multipliers_sets_order)[round_number - 1]
+        multipliers = multipliers_sets[current_order]
         player.total_number_of_objects = total_number_of_objects_by_round[round_number]
-        # random.shuffle(multipliers)
+        random.shuffle(multipliers)
         player.box0_multiplier = multipliers[0]
         player.box1_multiplier = multipliers[1]
         player.box2_multiplier = multipliers[2]

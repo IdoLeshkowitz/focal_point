@@ -20,7 +20,7 @@ function renderInstructionsPage(props) {
                     <p>
                         You are a <b>Hider</b>. In each set of boxes you need to hide all of your objects. You can hide
                         anywhere between zero and all of your objects in a box. The multiplication rate of each box is
-                        indicated under it, and the objects hidden there will be multiplied by this rate. Objects in the
+                        indicated under it, and the objects hidden there were multiplied by this rate. Objects in the
                         boxes not chosen by your matched Opener will be yours.
                     </p>
                 }

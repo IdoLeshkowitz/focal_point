@@ -6,21 +6,21 @@ function renderTestPage() {
         const steps = [
             <Instructions/>,
             <Question 
-                label={<span>If the Hider hides all six objects in box B2 and the Opener opens box B4 how much will they each get?</span>}
+                label={<span>If the Hider hides all 7 objects in box B2 and the Opener opens box B4 how much will they each get?</span>}
                 id="question_1"
-                expectedHiderAnswer="12"
+                expectedHiderAnswer="14"
                 expectedOpenerAnswer="0"
                 />,
             <Question
-                label={<span>If the Hider hides 2 objects in box B2 and 4 objects in box B4 and the Opener opens box B4 how much will they each get?</span>}
+                label={<span>If the Hider hides 2 objects in box B2 and 5 objects in box B4 and the Opener opens box B4 how much will they each get?</span>}
                 id="question_2"
                 expectedHiderAnswer="4"
-                expectedOpenerAnswer="16"
+                expectedOpenerAnswer="20"
                 />,
             <Question
-                label={<span>If the Hider hides, again, 2 objects in box B2 and 4 objects in box B4 and the Opener opens box B2 how much will they each get?</span>}
+                label={<span>If the Hider hides, again, 2 objects in box B2 and 5 objects in box B4 and the Opener opens box B2 how much will they each get?</span>}
                 id="question_3"
-                expectedHiderAnswer="16"
+                expectedHiderAnswer="20"
                 expectedOpenerAnswer="4"
                 />,    
             <EndTest/>                            
@@ -119,7 +119,7 @@ function renderTestPage() {
                     <StateContext.Provider value={state}>
                         <input type="hidden" name="ended_successfully" value={state.endedSuccessfully ?? false} />
                         <section>
-                            <h4>Test</h4>
+                            <h4>Test {props.roundNumber}</h4>
                             {currentStep}
                             <div class="button-container">       
                                 <button class="btn btn-primary" type="button" onClick={onButtonClick} disabled={!isInputValid()}>
@@ -144,7 +144,7 @@ function renderTestPage() {
                         you fail the test your participation will be terminated.
                     </p>
                     <p>
-                        In the test, there are two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
+                        In the test, there are 7 objects to be hidden in two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
                     </p>
                 </>
             )
@@ -203,7 +203,7 @@ function renderTestPage() {
                     </p>
                     { state.mistakesCount === 1 && 
                         <p className="error">
-                            <span>Incorrect answer. You have 1 attempt remaining.</span>
+                            <span><b>Incorrect answer. You have 1 attempt remaining.</b></span>
                         </p>
                     }
                 </>
