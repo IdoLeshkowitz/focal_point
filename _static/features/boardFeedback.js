@@ -6,7 +6,7 @@ function renderBoardFeedbackPage() {
         function FeedbackPage(props){
             return (
                <section>
-                    <h4>Feedback</h4>
+                    <h4>A Question</h4>
                     <p>
                         Does the situation remind you of anything in your life?<br/>
                         If it does, please describe. The five best stories will get a bonus. If it does not- ignore this question.

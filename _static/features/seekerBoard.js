@@ -95,7 +95,7 @@ function renderHiderBoardPage() {
                                     {state.totalNumberOfObjects}
                                 </h4>
                                 <span style={{alignSelf:"center"}}>
-                                    Objects left to hide
+                                    Objects distributed by Hider
                                 </span>
                             </div>
                             <div className="boxes-area">
@@ -105,7 +105,6 @@ function renderHiderBoardPage() {
                                             return (
                                                 <div className="box-container">
                                                     <div className="box box-open hider">
-                                                        <span className="text-black">?</span>
                                                     </div>
                                                 </div>
                                             )
@@ -123,9 +122,9 @@ function renderHiderBoardPage() {
                                     state.selection.map((_, boxIndex)=>{
                                         return (
                                             <div className="box-container">
-                                                <span className="arrow-down">
+                                                <h6 className="arrow-down">
                                                     ×{state.multipliers[boxIndex]}
-                                                </span>
+                                                </h6>
                                             </div>
                                         )
                                     })

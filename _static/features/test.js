@@ -114,15 +114,19 @@ function renderTestPage() {
                 }
                return state.hiderAnswer.state === "valid" && state.openerAnswer.state === "valid"
            }
+           console.log(currentStep)
            return (
                 <DispatchContext.Provider value={dispatch}>
                     <StateContext.Provider value={state}>
                         <input type="hidden" name="ended_successfully" value={state.endedSuccessfully ?? false} />
                         <section>
-                            <h4>Test {props.roundNumber}</h4>
+                            {
+                                currentStep.type.name === "Question" &&
+                                    <h4>Test {state.currentStepIndex}</h4>
+                            }
                             {currentStep}
-                            <div class="button-container">       
-                                <button class="btn btn-primary" type="button" onClick={onButtonClick} disabled={!isInputValid()}>
+                            <div className="button-container">       
+                                <button className="btn btn-primary" type="button" onClick={onButtonClick} disabled={!isInputValid()}>
                                     { state.endedSuccessfully === false ?
                                         "Exit"
                                         :

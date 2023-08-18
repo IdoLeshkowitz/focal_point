@@ -18,6 +18,9 @@ class Player(BasePlayer):
     box2_is_selected = models.BooleanField(blank=True, initial=False)
     box3_is_selected = models.BooleanField(blank=True, initial=False)
 
+    set_permutation = models.StringField(blank=True, initial="")
+    current_set = models.StringField(blank=True, initial="")
+
     total_number_of_objects = models.IntegerField(blank=True, initial=-1)
 
     multipliers_sets_order = models.StringField(blank=True, initial="")
@@ -25,10 +28,25 @@ class Player(BasePlayer):
     feedback = models.LongStringField(blank=True, initial="")
 
 
-multipliers_sets = {
-    "a": [1, 1, 1, 1],
-    "b": [1, 1, 1, 3],
-    "c": [1, 2, 3, 4],
+multipliers_permutations = {
+    "a": [
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+    ],
+    "b": [
+        [1, 1, 1, 3],
+        [1, 1, 3, 1],
+        [1, 3, 1, 1],
+        [3, 1, 1, 1],
+    ],
+    "c": [
+        [1, 4, 2, 3],
+        [2, 1, 3, 4],
+        [3, 2, 4, 1],
+        [4, 3, 1, 2],
+    ],
 }
 
 total_number_of_objects_by_round = {
@@ -63,9 +81,6 @@ class SeekerBoard(Page):
                 elif i == 3:
                     player.box3_is_selected = selection[i]
 
-
-
-
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
@@ -95,14 +110,18 @@ class PreProcess(Page):
             order = ["a", "b", "c"]
             random.shuffle(order)
             player.multipliers_sets_order = str(order)
-        current_order = eval(player.in_round(1).multipliers_sets_order)[round_number - 1]
-        multipliers = multipliers_sets[current_order]
-        player.total_number_of_objects = total_number_of_objects_by_round[round_number]
-        random.shuffle(multipliers)
+        else :
+            player.multipliers_sets_order = player.in_round(1).multipliers_sets_order
+        current_set = eval(player.in_round(1).multipliers_sets_order)[round_number - 1]
+        set_permutation = random.choice(multipliers_permutations[current_set])
+        player.set_permutation = str(set_permutation)
+        player.current_set = current_set
+        multipliers = set_permutation
         player.box0_multiplier = multipliers[0]
         player.box1_multiplier = multipliers[1]
         player.box2_multiplier = multipliers[2]
         player.box3_multiplier = multipliers[3]
+        player.total_number_of_objects = total_number_of_objects_by_round[round_number]
         player.start_time = str(datetime.now(timezone.utc))
 
 

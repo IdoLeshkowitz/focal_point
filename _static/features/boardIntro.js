@@ -10,7 +10,9 @@ function renderInstructionsPage(props) {
                     </p>
                     <p>
                         If you are a Hider, you will hide objects in three sets of four boxes.<br/>
-                        If you are an Opener, you will see the same three sets of four boxes, and in each set choose two boxes that will be opened later.<br/>
+                        If you are an Opener, you will see the same three sets of four boxes, and in each set choose two boxes that will be opened later.
+                    </p>
+                    <p>
                         You will then be randomly matched with an opponent of the other role. One of your three sets will be randomly chosen, the chosen boxes will be opened, and your bonus will be calculated based on the total number of objects in the boxes you get (chosen by the Opener or left for the Hider).<br/>
                         Each object is worth # Pence.
                     </p>

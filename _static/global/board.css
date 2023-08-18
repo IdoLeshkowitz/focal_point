@@ -140,7 +140,7 @@
 .board-row {
     display: grid;
     grid-template-areas: "a b c";
-    grid-template-columns: 1fr .7fr 2.5fr;
+    grid-template-columns: 1fr .8fr 2.5fr;
     border:1px solid black;
     border-radius: 1rem;
     /*padding: 1rem;*/
@@ -168,8 +168,9 @@
     background-color: #f2f2f2;
 }
 .arrow-down{
-    width: 100%;
+    width: 80%;
     height :100%;
+    transform: scale(1.3) translateY(0.2rem) translateX(-0.4rem);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

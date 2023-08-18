@@ -79,11 +79,11 @@ function renderHiderBoardPage() {
                 setProgress("distribution")
             }
             function onDone(){
-                if (progress === "distribution"){
-                    setProgress("results")   
-                }else {
+                // if (progress === "distribution"){
+                //     setProgress("results")   
+                // }else {
                     finishRound()
-                }
+                // }
             }
             function finishRound(){
                 for (let i=0; i<state.distribution.length; i++){
@@ -166,9 +166,9 @@ function renderHiderBoardPage() {
                                     currentDistribution.map((_,boxIndex)=>{
                                         return (
                                             <div className="box-container">
-                                                <span className="arrow-down">
+                                                <h6 className="arrow-down">
                                                     ×{state.multipliers[boxIndex]}
-                                                </span>
+                                                </h6>
                                             </div>
                                         )
                                     })
