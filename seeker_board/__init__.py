@@ -49,18 +49,17 @@ multipliers_permutations = {
     ],
 }
 
-total_number_of_objects_by_round = {
-    1: 48,
-    2: 40,
-    3: 25,
+total_number_of_objects_by_set = {
+    "a": 48,
+    "b": 40,
+    "c": 25,
 }
-
 
 class SeekerBoard(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
-            'totalNumberOfObjects': total_number_of_objects_by_round[player.round_number],
+            'totalNumberOfObjects': total_number_of_objects_by_set[player.current_set],
             "multipliers":          [player.box0_multiplier, player.box1_multiplier, player.box2_multiplier, player.box3_multiplier],
             'roundNumber':          player.round_number
         }
@@ -121,7 +120,7 @@ class PreProcess(Page):
         player.box1_multiplier = multipliers[1]
         player.box2_multiplier = multipliers[2]
         player.box3_multiplier = multipliers[3]
-        player.total_number_of_objects = total_number_of_objects_by_round[round_number]
+        player.total_number_of_objects = total_number_of_objects_by_set[current_set]
         player.start_time = str(datetime.now(timezone.utc))
 
 
