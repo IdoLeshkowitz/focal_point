@@ -42,11 +42,15 @@ class Consent(Page):
         player.end_time = str(datetime.now(timezone.utc))
         player.participant.user_accepted_terms = player.user_accepted_terms
 
-
+class MissingLabel(Page):
+    def is_displayed(player: Player):
+        return player.participant.label == None
+    def app_after_this_page(player: Player, upcoming_apps):
+        return upcoming_apps[-1]
 class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.start_time = str(datetime.now(timezone.utc))
 
 
-page_sequence = [PreProcess, Consent]
+page_sequence = [PreProcess,MissingLabel, Consent]
