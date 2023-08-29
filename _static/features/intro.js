@@ -8,7 +8,7 @@ function renderInstructionsPage(){
                 <section>
                     <h4>Instructions</h4>
                     <p>
-                        The game involves a set of boxes and a number of objects to be hidden in the boxes.<br/>
+                        In the test, there are 2 boxes and 7 objects to be hidden<br/>
                         Each box has a value by which the number of objects in the box is multiplied (the box’ <b>multiplication rate</b>).<br/>
                         One player (the “Hider”) chooses how to distribute the objects across the boxes before a
                         second player (the “Opener”) chooses half of the boxes to open. Openers get the objects from

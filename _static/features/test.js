@@ -148,7 +148,7 @@ function renderTestPage() {
                         you fail the test your participation will be terminated.
                     </p>
                     <p>
-                        In the test, there are 7 objects to be hidden in two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
+                        In the test, there are 7 objects to be hidden in two boxes: Box B2, which multiplies the objects in it by x2, and box B4, which multiplies the objects in it by x4.
                     </p>
                 </>
             )
@@ -199,7 +199,7 @@ function renderTestPage() {
             return (
                 <>
                     <p>
-                        In the test, there are two boxes: Box B2, which multiplies the objects in it by 2, and box B4, which multiplies the objects in it by 4.
+                        In the test, there are two boxes: Box B2, which multiplies the objects in it by x2, and box B4, which multiplies the objects in it by x4.
                     </p>
                     <p>
                         {props.label}<br/>

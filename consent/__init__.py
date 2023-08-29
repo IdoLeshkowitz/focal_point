@@ -53,4 +53,5 @@ class PreProcess(Page):
         player.start_time = str(datetime.now(timezone.utc))
 
 
-page_sequence = [PreProcess,MissingLabel, Consent]
+# page_sequence = [PreProcess,MissingLabel, Consent]
+page_sequence = [PreProcess, Consent]
