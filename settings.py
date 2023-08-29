@@ -10,13 +10,13 @@ SESSION_CONFIGS = [
         'name':                  "hider",
         'display_name':          "hider",
         'num_demo_participants': 1,
-        'app_sequence':          ["hider", "consent", "intro", "test", "board_intro", "hider_board", "exit"],
+        'app_sequence':          ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
     },
     {
         'name':                  "seeker",
         'display_name':          "seeker",
         'num_demo_participants': 1,
-        'app_sequence':          ["seeker", "consent", "intro", "test", "board_intro", "seeker_board", "exit"],
+        'app_sequence':          ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
     },
 ]
 ROOMS = [
