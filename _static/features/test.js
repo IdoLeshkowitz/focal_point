@@ -4,7 +4,6 @@ function renderTestPage() {
             return <div></div>
         }
         const steps = [
-            <Instructions/>,
             <Question 
                 label={<span>If the Hider hides all 7 objects in box B2 and the Opener opens box B4 how much will they each get?</span>}
                 id="question_1"
@@ -114,7 +113,6 @@ function renderTestPage() {
                 }
                return state.hiderAnswer.state === "valid" && state.openerAnswer.state === "valid"
            }
-           console.log(currentStep)
            return (
                 <DispatchContext.Provider value={dispatch}>
                     <StateContext.Provider value={state}>
@@ -199,7 +197,8 @@ function renderTestPage() {
             return (
                 <>
                     <p>
-                        In the test, there are two boxes: Box B2, which multiplies the objects in it by x2, and box B4, which multiplies the objects in it by x4.
+                        In the test, there are two boxes: Box B2, which multiplies the objects in it by x2, and box B4, which multiplies the objects in it by x4. <br/>
+                        The Hider hides 7 objects and the Opener opens one.
                     </p>
                     <p>
                         {props.label}<br/>

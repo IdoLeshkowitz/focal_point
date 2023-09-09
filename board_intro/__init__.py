@@ -12,6 +12,7 @@ class BoardIntro(Page):
     def js_vars(player: Player):
         return {
             "role": player.participant.role,
+            "real_world_currency_per_point": player.session.config["real_world_currency_per_point"]
         }
 
     @staticmethod

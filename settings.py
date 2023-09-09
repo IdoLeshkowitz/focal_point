@@ -3,21 +3,27 @@ from os import environ
 from otree.project_template.settings import SESSION_CONFIG_DEFAULTS
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=1, doc="", currency="GBP", DEBUG=True
+    real_world_currency_per_point=2, participation_fee=1, doc="", currency="GBP", DEBUG=True
 )
 SESSION_CONFIGS = [
     {
-        'name':                  "hider",
-        'display_name':          "hider",
+        'name': "hider",
+        'display_name': "hider",
         'num_demo_participants': 1,
-        'app_sequence':          ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+        'app_sequence': ["hider", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
     },
     {
-        'name':                  "seeker",
-        'display_name':          "seeker",
+        'name': "seeker",
+        'display_name': "seeker",
         'num_demo_participants': 1,
-        'app_sequence':          ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
+        'app_sequence': ["seeker", "consent", "intro", "test", "board_intro", "board", "feedback", "exit"],
     },
+    {
+        'name': "treatment_allocator",
+        'display_name': "treatment_allocator",
+        'num_demo_participants': 1,
+        'app_sequence': ["treatment_allocator"],
+    }
 ]
 ROOMS = [
     {"name": "hider", "display_name": "hider"},

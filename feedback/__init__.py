@@ -13,7 +13,13 @@ class Feedback(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
-
+    @staticmethod
+    def live_method(player: Player, data):
+        action = data["action"]
+        if action == "set_feedback":
+            feedback = data["feedback"]
+            print(feedback)
+            player.feedback = feedback
 
 class Group(BaseGroup):
     pass
