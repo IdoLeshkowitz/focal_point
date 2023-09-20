@@ -93,7 +93,8 @@ class Allocator(Page):
             base_url = os.environ.get("BASE_URL")
             url = f"{base_url}/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
         else:
-            url = f"http://localhost:8000/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
+            # url = f"http://localhost:8000/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
+            url = f"https://focal-point-jayk-e84a815d5f99.herokuapp.com/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
         return {"trajectory_link": url}
 
 
