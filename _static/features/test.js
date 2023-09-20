@@ -120,7 +120,7 @@ function renderTestPage() {
                         <section>
                             {
                                 currentStep.type.name === "Question" &&
-                                    <h4>Test {state.currentStepIndex}</h4>
+                                    <h4>Test {state.currentStepIndex + 1}</h4>
                             }
                             {currentStep}
                             <div className="button-container">       

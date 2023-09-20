@@ -32,9 +32,9 @@ class Player(BasePlayer):
 
 
 total_number_of_objects_by_set = {
-    "a": 48,
-    "b": 40,
-    "c": 25,
+    "a": 96,
+    "b": 80,
+    "c": 50,
 }
 
 multipliers_permutations = {

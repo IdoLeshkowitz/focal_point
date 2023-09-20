@@ -28,6 +28,7 @@ SESSION_CONFIGS = [
 ROOMS = [
     {"name": "hider", "display_name": "hider"},
     {"name": "seeker", "display_name": "seeker"},
+    {"name":"treatment_allocator","display_name": "treatment_allocator"}
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
