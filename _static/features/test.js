@@ -224,7 +224,7 @@ function renderTestPage() {
             if (state.endedSuccessfully === false){
                 return (
                     <p>
-                        Since you exceeded the amount of accepted attempts you are asked to exit the experiment.
+                        Since you exceeded the number of allowed attempts you are asked to exit the experiment.
                     </p>
                 )
             }
