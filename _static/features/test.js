@@ -222,11 +222,7 @@ function renderTestPage() {
                 )
             }
             if (state.endedSuccessfully === false){
-                return (
-                    <p>
-                        Since you exceeded the number of allowed attempts you are asked to exit the experiment.
-                    </p>
-                )
+                return document.querySelector("form").submit()
             }
                 
         }
