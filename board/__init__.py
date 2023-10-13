@@ -29,6 +29,7 @@ class Player(BasePlayer):
     current_set = models.StringField(blank=True, initial="")
 
     multipliers_sets_order = models.StringField(blank=True, initial="")
+    finished = models.BooleanField()
 
 
 total_number_of_objects_by_set = {
@@ -60,13 +61,16 @@ multipliers_permutations = {
 
 
 class Board(Page):
+    form_model = 'player'
+    form_fields = ['finished']
     @staticmethod
     def js_vars(player: Player):
         return {
             'totalNumberOfObjects': total_number_of_objects_by_set[player.current_set],
-            "multipliers":          [player.box0_multiplier, player.box1_multiplier, player.box2_multiplier, player.box3_multiplier],
-            'roundNumber':          player.round_number,
-            "role":                 player.participant.role,
+            "multipliers": [player.box0_multiplier, player.box1_multiplier, player.box2_multiplier,
+                            player.box3_multiplier],
+            'roundNumber': player.round_number,
+            "role": player.participant.role,
         }
 
     @staticmethod
@@ -101,7 +105,14 @@ class Board(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
+        if player.participant.role == "seeker":
+            if player.box0_is_selected != "None" and player.box1_is_selected != "None" and player.box2_is_selected != "None" and player.box3_is_selected != "None":
+                player.finished = True
+        else:
+            if player.box0_number_of_objects != -1 and player.box1_number_of_objects != -1 and player.box2_number_of_objects != -1 and player.box3_number_of_objects != -1:
+                player.finished = True
         player.participant.ended_successfully = True
+
 
 
 class Group(BaseGroup):
