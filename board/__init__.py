@@ -89,6 +89,12 @@ class Board(Page):
                         player.box2_is_selected = str(selection[i])
                     elif i == 3:
                         player.box3_is_selected = str(selection[i])
+            elif action == 'finish_round':
+                selected_boxes = [player.box0_is_selected, player.box1_is_selected,
+                                  player.box2_is_selected, player.box3_is_selected]
+                print(selected_boxes)
+                if selected_boxes.count("True") == 2:
+                    return {player.id_in_group: {'action': 'finish_round', 'finished': True}}
         elif player.participant.role == "hider":
             if action == 'set_number_of_objects':
                 box_index = data['box_index']
@@ -101,18 +107,17 @@ class Board(Page):
                     player.box2_number_of_objects = number_of_objects
                 elif box_index == 3:
                     player.box3_number_of_objects = number_of_objects
+            elif action == 'finish_round':
+                hidden_objects = [player.box0_number_of_objects, player.box1_number_of_objects,
+                                  player.box2_number_of_objects, player.box3_number_of_objects]
+                total_number_of_hidden_objects = sum(hidden_objects)
+                if total_number_of_hidden_objects == player.total_number_of_objects:
+                    return {player.id_in_group: {'action': 'finish_round', 'finished': True}}
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
-        if player.participant.role == "seeker":
-            if player.box0_is_selected != "None" and player.box1_is_selected != "None" and player.box2_is_selected != "None" and player.box3_is_selected != "None":
-                player.finished = True
-        else:
-            if player.box0_number_of_objects != -1 and player.box1_number_of_objects != -1 and player.box2_number_of_objects != -1 and player.box3_number_of_objects != -1:
-                player.finished = True
         player.participant.ended_successfully = True
-
 
 
 class Group(BaseGroup):

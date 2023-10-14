@@ -60,6 +60,13 @@ function renderHiderBoardPage() {
                     return
                 }
                 dispatch({type:"setDistribution", distribution: newDistribution})
+                for (let i=0; i<newDistribution.length; i++){
+                    liveSend({
+                        action: "set_number_of_objects",
+                        box_index : i,
+                        number_of_objects : newDistribution[i],
+                    })
+                }
             }
             function onBoxBlur(boxIndex){
                 if (isNaN(parseInt(temporaryNumber)) || parseInt(temporaryNumber) < 0){
@@ -79,21 +86,9 @@ function renderHiderBoardPage() {
                 setProgress("distribution")
             }
             function onDone(){
-                // if (progress === "distribution"){
-                //     setProgress("results")   
-                // }else {
-                    finishRound()
-                // }
-            }
-            function finishRound(){
-                for (let i=0; i<state.distribution.length; i++){
-                    liveSend({
-                        action: "set_number_of_objects",
-                        box_index : i,
-                        number_of_objects : state.distribution[i],
-                    })
-                }
-                document.querySelector("form").submit()
+                liveSend({
+                    'action': 'finish_round',
+                })
             }
             const storageClassName = () =>{
                 let className = "storage"
@@ -270,10 +265,8 @@ function renderSeekerBoardPage() {
             }
             function finishRound(){
                 liveSend({
-                    'action': 'set_selection',
-                    'selection': state.selection,
+                    'action': 'finish_round',
                 })
-                document.querySelector("form").submit()
             }
             function onBoxClick(boxIndex){
                 const isAlreadySelected = state.selection[boxIndex] === true
@@ -281,6 +274,17 @@ function renderSeekerBoardPage() {
                 if (isAlreadySelected){
                     isSelected = false
                 }
+                liveSend({
+                    'action': 'set_selection',
+                    'selection': state.selection.map((selection, index)=>{
+                        if (index === boxIndex){
+                            return isSelected
+                        }
+                        else {
+                            return selection
+                        }
+                    })
+                })
                 dispatch({type:"setSelection", index: boxIndex, isSelected})
             }
             const storageClassName = () =>{
@@ -402,3 +406,14 @@ window.addEventListener("load", () => {
     }
     renderHiderBoardPage()
 })
+
+function liveRecv(data) {
+    if (data.action === "finish_round") {
+        const finishElement = document.createElement("input")
+        finishElement.type = "hidden"
+        finishElement.name = "finished"
+        finishElement.value = "true"
+        document.querySelector("form").appendChild(finishElement)
+        document.querySelector("form").submit()
+    }
+}
