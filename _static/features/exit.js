@@ -25,7 +25,7 @@ function renderExitPage(){
                     <p>
                         Thank you for your participation in this study. Unfortunately, you did not complete the study successfully.<br/>
                         Please return your hit.<br/>
-                    <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=CS3LMYLD">Use this link in order to return to Prolific</a>
+                    <a target="_blank" href="https://app.prolific.com/submissions/complete?cc=C1HELG6N">Use this link in order to return to Prolific</a>
                     </p>
                 )
             }

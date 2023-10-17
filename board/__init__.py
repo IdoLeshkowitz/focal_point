@@ -93,7 +93,7 @@ class Board(Page):
                 selected_boxes = [player.box0_is_selected, player.box1_is_selected,
                                   player.box2_is_selected, player.box3_is_selected]
                 print(selected_boxes)
-                if selected_boxes.count("True") == 2:
+                if selected_boxes.count("True") == 2 and not "None" in selected_boxes:
                     return {player.id_in_group: {'action': 'finish_round', 'finished': True}}
         elif player.participant.role == "hider":
             if action == 'set_number_of_objects':
@@ -111,7 +111,7 @@ class Board(Page):
                 hidden_objects = [player.box0_number_of_objects, player.box1_number_of_objects,
                                   player.box2_number_of_objects, player.box3_number_of_objects]
                 total_number_of_hidden_objects = sum(hidden_objects)
-                if total_number_of_hidden_objects == player.total_number_of_objects:
+                if total_number_of_hidden_objects == player.total_number_of_objects and not -1 in hidden_objects:
                     return {player.id_in_group: {'action': 'finish_round', 'finished': True}}
 
     @staticmethod
