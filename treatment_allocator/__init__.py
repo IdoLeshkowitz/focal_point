@@ -39,7 +39,7 @@ def creating_session(subsession: Subsession):
         an integer representing the chosen trajectory for the current player.
     """
     trajectories_distribution = generate_item_distribution(
-        ["hider","opener"], [50,50], 10)
+        ["hider", "opener"], [50, 50], 10)
     subsession.trajectories_distribution = str(trajectories_distribution)
     iterator = itertools.cycle(trajectories_distribution)
     for player in subsession.get_players():
@@ -94,7 +94,7 @@ class Allocator(Page):
             url = f"{base_url}/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
         else:
             url = f"http://localhost:8000/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
-        return {"trajectory_link": url}
+        return {"trajectory_link": url + "?participant_label=" + player.participant.label}
 
 
 page_sequence = [Allocator]
